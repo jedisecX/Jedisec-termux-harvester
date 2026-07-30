@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Document {{ doc.id }} \u2013 JediSec PDF Harvester{% endblock %}
+{% block content %}
+> DOCUMENT #{{ doc.id }}_
+
+
+		URL		{{ doc.url }}
+
+		State / Agency		{{ doc.state }} / {{ doc.agency_name }}
+
+		SHA-256		{{ doc.sha256 }}
+
+		File		{{ doc.filepath }} ({{ doc.filesize }} bytes)
+
+		Downloaded		{{ doc.downloaded_at }}
+
+		OCR used		{{ 'yes' if doc.ocr_used else 'no' }}
+
+
+
+
+Entities
+
+
+{% for e in entities %}
+  {{ e.entity_type }}: {{ e.entity_text }}
+{% endfor %}
+
+Related Documents (shared entities)
+
+
+		Document		Shared entities
+
+
+
+  {% for r in related %}
+  		{{ r.document.filepath }}		{{ r.shared_entities }}
+
+
+
+  {% endfor %}
+
+{% endblock %}

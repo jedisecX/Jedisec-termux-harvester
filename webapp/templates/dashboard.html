@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Dashboard \u2013 JediSec PDF Harvester{% endblock %}
+{% block content %}
+> BAYOU SWEEP DASHBOARD_
+
+
+		Total documents		{{ stats.total_documents }}
+
+		Duplicate content skipped (SHA-256 match)		{{ stats.total_duplicate_content_skipped }}
+
+		Total extracted entities		{{ stats.total_entities }}
+
+		Documents OCR'd		{{ stats.ocr_documents }}
+
+
+
+
+By State
+
+
+		State		Documents		Bytes
+
+
+
+  {% for row in stats.by_state %}
+  		{{ row.state }}		{{ row.c }}		{{ row.bytes }}
+
+
+
+  {% endfor %}
+
+
+Recent Agency Runs
+
+
+		State		Agency		Last Run		Found		New
+
+
+
+  {% for run in stats.recent_runs %}
+  		{{ run.state }}		{{ run.agency_name }}		{{ run.last_run_at }}		{{ run.docs_found }}		{{ run.docs_new }}
+
+
+
+  {% endfor %}
+
+{% endblock %}

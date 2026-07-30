@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Search \u2013 JediSec PDF Harvester{% endblock %}
+{% block content %}
+> SEARCH_
+
+
+  
+  
+
+
+{% if query %}
+Results for "{{ query }}"
+
+
+		Title		State		Agency		Snippet
+
+
+
+  {% for r in results %}
+  		{{ r.title or r.document.filepath }}		{{ r.document.state }}		{{ r.document.agency_name }}		{{ r.snippet|safe }}
+
+
+
+  {% endfor %}
+
+{% endif %}
+{% endblock %}
