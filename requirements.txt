@@ -1,0 +1,33 @@
+# Core -- all pure Python / no numpy, no C-extension compiles required.
+# Installs cleanly under Termux's pip (pkg install python first).
+requests
+beautifulsoup4
+tqdm
+flask
+pypdf              # text-layer extraction -- pure Python, no numpy
+
+# Optional OCR fallback (for scanned/image-only PDFs with no text layer).
+# pdf2image and pytesseract are themselves pure-Python subprocess
+# wrappers -- no numpy required -- but they need real system binaries:
+#
+#   Debian/Ubuntu:  apt install tesseract-ocr poppler-utils
+#   Termux:         pkg install tesseract poppler
+#
+# Pillow is a transitive dependency of pdf2image and DOES have C
+# extensions. On Termux, install it via pkg (precompiled) instead of
+# pip, which would otherwise try to build it from source:
+#
+#   Termux:         pkg install python-pillow
+#
+pdf2image
+pytesseract
+
+# NOTE ON ENTITY EXTRACTION: no package listed here for it on purpose.
+# processing/entities.py is a pure-Python, stdlib-only (re) gazetteer/
+# regex tagger -- no spaCy, no numpy, no thinc/blis. spaCy's dependency
+# chain is genuinely rough on Termux (no Android/aarch64 wheels for
+# numpy/thinc/blis, so pip falls back to compiling from source against
+# toolchains Termux doesn't ship). If you're NOT on a constrained device
+# and want ML-grade NER instead, you can swap in your own extractor as
+# long as it keeps the same signature:
+#   extract_entities(text) -> list[(entity_text, entity_type)]
